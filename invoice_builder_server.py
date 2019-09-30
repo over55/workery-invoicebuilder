@@ -110,7 +110,7 @@ class InvoiceBuilder(invoice_pb2_grpc.InvoiceBuilderServicer):
             'invoice_customers_approval': request.invoiceCustomersApproval,
             'line_01_notes': request.line01Notes,
             'line_02_notes': request.line02Notes,
-            'total_labout': request.totalLabout,
+            'total_labour': request.totalLabour,
             'total_materials': request.totalMaterials,
             'waste_removal': request.wasteRemoval,
             'sub_total': request.subTotal,

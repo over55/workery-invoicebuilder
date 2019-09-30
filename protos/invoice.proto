@@ -82,7 +82,7 @@ message GeneratePDFRequest {
     string invoiceCustomersApproval = 72;
     string line01Notes = 73;
     string line02Notes = 74;
-    string totalLabout = 75;
+    string totalLabour = 75;
     string totalMaterials = 76;
     string wasteRemoval = 77;
     string subTotal = 78;

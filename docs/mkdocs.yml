@@ -1,0 +1,7 @@
+site_name: Workery InvoiceBuilder
+nav:
+    - Home: index.md
+    - Installation:
+        - Quickinstall: installation/quickinstall.md
+        - Production: installation/production.md
+theme: readthedocs

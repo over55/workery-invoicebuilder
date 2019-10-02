@@ -146,7 +146,9 @@ def serve():
     try:
         server.wait_for_termination()
     except KeyboardInterrupt:
-            server.stop(0)
+        server.stop(0)
+    except Exception as e:
+        server.stop(0)
 
 
 if __name__ == '__main__':

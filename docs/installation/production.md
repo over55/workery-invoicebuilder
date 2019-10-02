@@ -28,7 +28,7 @@ The purpose of this section is to provide details on how to setup the ``workery-
 
 5. Confirm the server will start up by running the following in your terminal.
 
-        python invoice_builder_server.py
+        python invoicebuilder_server.py
 
 6. You should see the application run successfully. Now terminate it by holding the following keys on your keyboard ``CTRL + X``.
 

@@ -195,3 +195,4 @@ private_notes.txt
 workery/workery/static
 workery/staticfiles
 bin/*.pdf
+docs/env_docs

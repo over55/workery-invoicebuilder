@@ -4,4 +4,5 @@ nav:
     - Installation:
         - Quickinstall: installation/quickinstall.md
         - Production: installation/production.md
+    - License: license.md
 theme: readthedocs

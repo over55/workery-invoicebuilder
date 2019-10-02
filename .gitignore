@@ -195,4 +195,6 @@ private_notes.txt
 workery/workery/static
 workery/staticfiles
 bin/*.pdf
-# docs/env_docs
+
+# Do not save our documents environment variable.
+env_docs

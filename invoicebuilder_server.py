@@ -10,7 +10,7 @@ import grpc
 
 import invoice_pb2
 import invoice_pb2_grpc
-import invoice_writer
+import invoicebuilder_writer
 
 
 CHUNK_SIZE = 1024 * 1024  # 1MB
@@ -34,7 +34,7 @@ class InvoiceBuilder(invoice_pb2_grpc.InvoiceBuilderServicer):
 
     def GeneratePDF(self, request, context):
         filename = "bin/"+request.workOrderId+"-"+request.invoiceId+"-invoice.pdf"
-        writer = invoice_writer.WorkeryInvoicePDFWriter(filename)
+        writer = invoicebuilder_writer.WorkeryInvoicePDFWriter(filename)
         writer.set_data({
             'invoice_id': request.invoiceId,
             'invoice_date': request.invoiceDate,

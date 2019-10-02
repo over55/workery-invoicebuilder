@@ -13,4 +13,4 @@
 
 cd /opt/django/workery-invoicebuilder
 source env/bin/activate
-exec python grpc_server.py
+exec python invoicebuilder_server.py

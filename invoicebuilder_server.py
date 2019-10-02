@@ -10,7 +10,7 @@ import grpc
 
 import invoice_pb2
 import invoice_pb2_grpc
-import writer
+import invoice_writer
 
 
 CHUNK_SIZE = 1024 * 1024  # 1MB

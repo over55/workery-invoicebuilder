@@ -116,7 +116,7 @@ class InvoiceBuilder(invoice_pb2_grpc.InvoiceBuilderServicer):
             'sub_total': request.subTotal,
             'tax': request.tax,
             'total': request.total,
-            'grand_total': request.grandTotal,
+            'deposit': request.deposit,
             'payment_amount': request.paymentAmount,
             'payment_date': request.paymentDate,
             'cash': request.cash,

@@ -3,7 +3,7 @@ import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 
-WORKERY_INVOICE_FILENAME = "o55_Invoice_Books_2019_DRAFT.pdf"
+WORKERY_INVOICE_FILENAME = "Skills_At_Work_Invoice_Template_-_Workery.pdf"
 
 
 class WorkeryInvoicePDFWriter:
@@ -100,7 +100,7 @@ class WorkeryInvoicePDFWriter:
         can.drawString(393, 369, str(self.data['line_15_price']))
         can.drawString(485, 369, str(self.data['line_15_amount']))
         can.drawString(185, 339, str(self.data['invoice_quote_days']))
-        can.drawString(228, 293, str(self.data['invoice_associate_tax']))
+        can.drawString(220, 293, str(self.data['invoice_associate_tax']))
         can.drawString(215, 267, str(self.data['invoice_quote_date']))
         can.drawString(180, 243, str(self.data['invoice_customers_approval']))
         can.drawString(58, 188, str(self.data['line_01_notes']))

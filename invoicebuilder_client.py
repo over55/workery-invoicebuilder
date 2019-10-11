@@ -106,7 +106,7 @@ def run():
             totalLabour = '$100.00',
             totalMaterials = '$100.00',
             wasteRemoval = '',
-            subTotal = '$100.00',
+            amountDue = '$100.00',
             tax = '$13.00',
             total = '$130.00',
             grandTotal = '$130.00',

@@ -108,7 +108,7 @@ class WorkeryInvoicePDFWriter:
         can.drawString(450, 349, str(self.data['total_labour']))
         can.drawString(450, 323, str(self.data['total_materials']))
         can.drawString(450, 303, str(self.data['waste_removal']))
-        can.drawString(450, 278, str(self.data['sub_total']))
+        can.drawString(450, 278, str(self.data['amount_due']))
         can.drawString(450, 259, str(self.data['tax']))
         can.drawString(448, 229, str(self.data['total']))
         can.drawString(448, 157, str(self.data['deposit']))

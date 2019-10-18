@@ -128,6 +128,7 @@ class InvoiceBuilder(invoice_pb2_grpc.InvoiceBuilderServicer):
             'associate_sign_date': request.associateSignDate,
             'associate_signature': request.associateSignature,
             'work_order_id': request.workOrderId,
+            'sub_total': request.subTotal,
         })
         writer.generate_pdf()
         return get_file_chunks(filename)

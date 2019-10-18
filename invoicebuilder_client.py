@@ -110,7 +110,7 @@ def run():
             tax = '$13.00',
             total = '$130.00',
             grandTotal = '$130.00',
-            paymentAmount = '$130.00',
+            paymentAmount = '$130.00', # DEPRECATED
             paymentDate = '2019-01-01',
             cash = 'X',
             cheque = '',
@@ -121,6 +121,7 @@ def run():
             associateSignDate = '2019-01-01',
             associateSignature = 'Bob the Builder11111111111111',
             workOrderId = '1234567',
+            subTotal = '$1,234.00',
         ))
         save_chunks_to_file(response, "bin/sample.pdf")
 

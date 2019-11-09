@@ -105,7 +105,7 @@ def run():
             line02Notes = '11111111111111111111111111111111111111111',
             totalLabour = '$100.00',
             totalMaterials = '$100.00',
-            wasteRemoval = '',
+            otherCosts = '',
             amountDue = '$100.00',
             tax = '$13.00',
             total = '$130.00',

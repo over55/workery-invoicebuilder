@@ -112,7 +112,7 @@ class InvoiceBuilder(invoice_pb2_grpc.InvoiceBuilderServicer):
             'line_02_notes': request.line02Notes,
             'total_labour': request.totalLabour,
             'total_materials': request.totalMaterials,
-            'waste_removal': request.wasteRemoval,
+            'other_costs': request.otherCosts,
             'amount_due': request.amountDue,
             'tax': request.tax,
             'total': request.total,

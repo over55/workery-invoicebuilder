@@ -1,4 +1,4 @@
-# Workery InvoiceBuilder
+# Workery Invoice Builder
 [![Documentation Status](https://readthedocs.org/projects/workery-invoicebuilder/badge/?version=latest)](https://workery-invoicebuilder.readthedocs.io/?badge=latest)
 
 ## Description

@@ -8,5 +8,4 @@ Dockerfile
 README.md
 
 # Project artificats we don't want includd.
-docs
-bin
+# ...

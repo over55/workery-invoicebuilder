@@ -17,7 +17,7 @@ func New(filePath string) (*PDFBuilder, error) {
 	pdf.AddPage()
 
 	// Draw imported template onto page
-	gofpdi.UseImportedTemplate(pdf, tpl1, 0, 10, 210, 0)
+	gofpdi.UseImportedTemplate(pdf, tpl1, 0, 0, 210, 0)
 
 	pdf.SetFont("Helvetica", "", 20)
 	pdf.Cell(111, 111, "Import existing PDF into gofpdf document with gofpdi")

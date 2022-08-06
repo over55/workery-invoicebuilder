@@ -1,11 +1,11 @@
-package builder
+package dtos
 
 const (
 	WorkOrderInvoiceActiveState   = 1
 	WorkOrderInvoiceInactiveState = 2
 )
 
-type WorkOrderInvoice struct {
+type WorkOrderInvoiceRequestDTO struct {
 	Id                       string `json:"id"`
 	Uuid                     string `json:"uuid"`
 	TenantID                 string `json:"tenant_id"`
@@ -116,4 +116,8 @@ type WorkOrderInvoice struct {
 	SubTotal                 string `json:"sub_total"`
 	State                    string `json:"state"` // IsArchived string `json:"is_archived"`
 	OldId                    string `json:"old_id"`
+}
+type WorkOrderInvoiceResponseDTO struct {
+	FileName string `json:"file_name"`
+	FilePath string `json:"file_path"`
 }

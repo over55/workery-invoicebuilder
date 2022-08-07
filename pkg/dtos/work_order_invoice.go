@@ -119,5 +119,5 @@ type WorkOrderInvoiceRequestDTO struct {
 }
 type WorkOrderInvoiceResponseDTO struct {
 	FileName string `json:"file_name"`
-	FilePath string `json:"file_path"`
+	Content  []byte `json:"content"`
 }

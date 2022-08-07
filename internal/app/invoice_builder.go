@@ -3,6 +3,7 @@ package app
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -333,6 +334,10 @@ func (bdr *invoiceBuilder) GeneratePDF(dto *dtos.WorkOrderInvoiceRequestDTO) (*d
 	pdf.SetXY(128, 239)
 	pdf.Cell(0, 0, dto.ClientSignature)
 
+	////
+	//// Generate the file and save it to the file.
+	////
+
 	fileName := fmt.Sprintf("%s.pdf", bdr.UUIDProvider.NewUUID())
 	filePath := fmt.Sprintf("%s/%s", bdr.AppConfig.Server.DataDirectoryPath, fileName)
 
@@ -341,11 +346,26 @@ func (bdr *invoiceBuilder) GeneratePDF(dto *dtos.WorkOrderInvoiceRequestDTO) (*d
 		return nil, err
 	}
 
-	log.Println("fileName:", fileName)
-	log.Println("filePath:", filePath)
+	////
+	//// Open the file and read all the binary data.
+	////
+
+	f, err := os.Open(filePath)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+	bin, err := ioutil.ReadAll(f)
+	if err != nil {
+		return nil, err
+	}
+
+	////
+	//// Return the generate invoice.
+	////
 
 	return &dtos.WorkOrderInvoiceResponseDTO{
 		FileName: fileName,
-		FilePath: filePath,
+		Content:  bin,
 	}, err
 }

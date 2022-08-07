@@ -3,7 +3,7 @@ services:
   app:
     stdin_open: true
     container_name: workery-invoicebuilder
-    image: over55/workery-invoicebuilder:1.0
+    image: over55/workery-invoicebuilder:latest
     environment:
         WORKERY_INVOICEBUILDER_IP: 0.0.0.0
         WORKERY_INVOICEBUILDER_PORT: 8002

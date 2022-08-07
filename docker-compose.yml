@@ -6,14 +6,14 @@ services:
     image: over55/workery-invoicebuilder:1.0
     environment:
         WORKERY_INVOICEBUILDER_IP: 0.0.0.0
-        WORKERY_INVOICEBUILDER_PORT: 8001
+        WORKERY_INVOICEBUILDER_PORT: 8002
         WORKERY_INVOICEBUILDER_PDF_TEMPLATE_FILE_PATH: Template.pdf  # This is the name of the invoice template that our invoices built from.
         WORKERY_INVOICEBUILDER_DATA: /data                           # This is the directory inside the docker container that our generated PDFs will be stored.
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8001:8001"
+      - "8002:8002"
     volumes:
       - data:/data
 

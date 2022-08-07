@@ -6,6 +6,9 @@ Dockerfile
 .dockerignore
 .gitignore
 README.md
+private.md
+private.txt
+docker-compose.yml
 
 # Project artificats we don't want includd.
 # ...

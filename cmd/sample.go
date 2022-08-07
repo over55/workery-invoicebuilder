@@ -2,10 +2,13 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/spf13/cobra"
 
+	"github.com/over55/workery-invoicebuilder/internal/config"
 	"github.com/over55/workery-invoicebuilder/pkg/dtos"
+	"github.com/over55/workery-invoicebuilder/pkg/rpc"
 )
 
 func init() {
@@ -117,6 +120,19 @@ var sampleCmd = &cobra.Command{
 			AssociateSignature:       "Bart Mika XXXXXXX",
 			WorkOrderId:              "12345 XXXX",
 		}
+
+		// Load up all the environment variables.
+		appConf := config.AppConfig()
+
+		// Connect to a running client.
+		client := rpc.NewClient(appConf)
+
+		// Execute the remote call.
+		res, err := client.GeneratePDF(dto)
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Println(res)
 
 	},
 }

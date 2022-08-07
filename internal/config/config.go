@@ -14,6 +14,7 @@ type serverConf struct {
 	Port                string `env:"WORKERY_INVOICEBUILDER_PORT,required"`
 	IP                  string `env:"WORKERY_INVOICEBUILDER_IP,required"`
 	PDFTemplateFilePath string `env:"WORKERY_INVOICEBUILDER_PDF_TEMPLATE_FILE_PATH,required"`
+	DataDirectoryPath   string `env:"WORKERY_INVOICEBUILDER_DATA,required"`
 }
 
 func AppConfig() *Conf {

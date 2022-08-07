@@ -1,5 +1,3 @@
-# DOCKERFILE IS USED IF YOU WOULD LIKE TO SETUP A STAND ALONE CONTAINER FOR YOUR
-# DEVELOPMENT NEEDS WHICH INCLUDES LOCAL STORAGE.
 version: '3.9'
 services:
   app:
@@ -9,7 +7,8 @@ services:
     environment:
         WORKERY_INVOICEBUILDER_IP: 0.0.0.0
         WORKERY_INVOICEBUILDER_PORT: 8001
-        WORKERY_INVOICEBUILDER_PDF_TEMPLATE_FILE_PATH: Template_Live_v2.pdf
+        WORKERY_INVOICEBUILDER_PDF_TEMPLATE_FILE_PATH: Template.pdf  # This is the name of the invoice template that our invoices built from.
+        WORKERY_INVOICEBUILDER_DATA: /data                           # This is the directory inside the docker container that our generated PDFs will be stored.
     build:
       context: .
       dockerfile: Dockerfile

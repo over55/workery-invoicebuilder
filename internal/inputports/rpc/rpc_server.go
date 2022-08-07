@@ -16,11 +16,11 @@ import (
 )
 
 type RPC struct {
-	App         app.Builder
+	App         app.InvoiceBuilder
 	tcpListener *net.TCPListener
 }
 
-func NewServer(appConfig *config.Conf, a app.Builder) *RPC {
+func NewServer(appConfig *config.Conf, a app.InvoiceBuilder) *RPC {
 
 	applicationAddress := fmt.Sprintf("%s:%s", appConfig.Server.IP, appConfig.Server.Port)
 	log.Println("Initializing address for", applicationAddress)

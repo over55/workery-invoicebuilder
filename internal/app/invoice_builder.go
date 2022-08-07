@@ -14,33 +14,35 @@ import (
 	"github.com/over55/workery-invoicebuilder/pkg/uuid"
 )
 
-type Builder interface {
+type InvoiceBuilder interface {
 	GeneratePDF(dto *dtos.WorkOrderInvoiceRequestDTO) (*dtos.WorkOrderInvoiceResponseDTO, error)
 }
 
-type pdfBuilder struct {
-	FilePath     string
+type invoiceBuilder struct {
+	AppConfig    *config.Conf
 	UUIDProvider uuid.Provider
 }
 
-func New(appConfig *config.Conf, uuidp uuid.Provider) (Builder, error) {
+func New(appConfig *config.Conf, uuidp uuid.Provider) (InvoiceBuilder, error) {
+	// Defensive code: Make sure we have access to the file before proceeding any further with the code.
 	log.Println("Opening up file at path:", appConfig.Server.PDFTemplateFilePath)
 	_, err := os.Stat(appConfig.Server.PDFTemplateFilePath)
 	if os.IsNotExist(err) {
-		return nil, errors.New("Folder does not exist.")
+		return nil, errors.New("file does not exist")
 	}
 
-	return &pdfBuilder{
-		FilePath:     appConfig.Server.PDFTemplateFilePath,
+	return &invoiceBuilder{
+		AppConfig:    appConfig,
 		UUIDProvider: uuidp,
 	}, nil
 }
 
-func (bdr *pdfBuilder) GeneratePDF(dto *dtos.WorkOrderInvoiceRequestDTO) (*dtos.WorkOrderInvoiceResponseDTO, error) {
+func (bdr *invoiceBuilder) GeneratePDF(dto *dtos.WorkOrderInvoiceRequestDTO) (*dtos.WorkOrderInvoiceResponseDTO, error) {
 	var err error
 
+	// Open our PDF invoice template and create clone it for the PDF invoice we will be building with.
 	pdf := gofpdf.New("P", "mm", "A4", "")
-	tpl1 := gofpdi.ImportPage(pdf, bdr.FilePath, 1, "/MediaBox")
+	tpl1 := gofpdi.ImportPage(pdf, bdr.AppConfig.Server.PDFTemplateFilePath, 1, "/MediaBox")
 
 	pdf.AddPage()
 
@@ -332,14 +334,18 @@ func (bdr *pdfBuilder) GeneratePDF(dto *dtos.WorkOrderInvoiceRequestDTO) (*dtos.
 	pdf.Cell(0, 0, dto.ClientSignature)
 
 	fileName := fmt.Sprintf("%s.pdf", bdr.UUIDProvider.NewUUID())
+	filePath := fmt.Sprintf("%s/%s", bdr.AppConfig.Server.DataDirectoryPath, fileName)
 
-	err = pdf.OutputFileAndClose(fileName)
+	err = pdf.OutputFileAndClose(filePath)
 	if err != nil {
 		return nil, err
 	}
 
+	log.Println("fileName:", fileName)
+	log.Println("filePath:", filePath)
+
 	return &dtos.WorkOrderInvoiceResponseDTO{
 		FileName: fileName,
-		FilePath: fmt.Sprintf("%v/%v", bdr.FilePath, fileName),
+		FilePath: filePath,
 	}, err
 }

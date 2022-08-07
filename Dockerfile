@@ -29,8 +29,11 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -o /app/workery-invoicebui
 FROM alpine:3.14
 
 
-# Copy only required data into this image
+# Copy only binary executable into this image
 COPY --from=build-env /app/workery-invoicebuilder .
+
+# Copy only pdf template into this image.
+COPY --from=build-env /app/Template.pdf .
 
 # Expose application port
 EXPOSE 8001

@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/spf13/cobra"
 
@@ -24,7 +25,7 @@ var greetCmd = &cobra.Command{
 
 		// Connect to a running client.
 		applicationAddress := fmt.Sprintf("%s:%s", appConf.Server.IP, appConf.Server.Port)
-		client := rpc.NewClient(applicationAddress)
+		client := rpc.NewClient(applicationAddress, 3, 15*time.Second)
 
 		// Execute the remote call.
 		message, err := client.Greet("Aki Kisaragi")

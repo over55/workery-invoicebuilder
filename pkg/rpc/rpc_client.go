@@ -14,7 +14,7 @@ type InvoiceBuilderService struct {
 	addr          string
 }
 
-func NewClient(addr string) *InvoiceBuilderService {
+func NewClient(addr string, retryLimit uint8, delayDuration time.Duration) *InvoiceBuilderService {
 	client, err := rpc.DialHTTP("tcp", addr)
 	if err != nil {
 		log.Println("RPC CLIENT ERROR | InvoiceBuilderService | Dialing TCP Error:", err)
@@ -25,9 +25,9 @@ func NewClient(addr string) *InvoiceBuilderService {
 
 	return &InvoiceBuilderService{
 		Client:        client,
-		RetryLimit:    5,
-		retryCount:    1,
-		DelayDuration: 10,
+		RetryLimit:    retryLimit,
+		retryCount:    0,
+		DelayDuration: delayDuration,
 		addr:          addr,
 	}
 }

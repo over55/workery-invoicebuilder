@@ -1,12 +1,9 @@
 package rpc
 
 import (
-	"fmt"
 	"log"
 	"net/rpc"
 	"time"
-
-	"github.com/over55/workery-invoicebuilder/internal/config"
 )
 
 type InvoiceBuilderService struct {
@@ -17,10 +14,8 @@ type InvoiceBuilderService struct {
 	addr          string
 }
 
-func NewClient(appConfig *config.Conf) *InvoiceBuilderService {
-	applicationAddress := fmt.Sprintf("%s:%s", appConfig.Server.IP, appConfig.Server.Port)
-
-	client, err := rpc.DialHTTP("tcp", applicationAddress)
+func NewClient(addr string) *InvoiceBuilderService {
+	client, err := rpc.DialHTTP("tcp", addr)
 	if err != nil {
 		log.Println("RPC CLIENT ERROR | InvoiceBuilderService | Dialing TCP Error:", err)
 		return nil
@@ -33,7 +28,7 @@ func NewClient(appConfig *config.Conf) *InvoiceBuilderService {
 		RetryLimit:    5,
 		retryCount:    1,
 		DelayDuration: 10,
-		addr:          applicationAddress,
+		addr:          addr,
 	}
 }
 

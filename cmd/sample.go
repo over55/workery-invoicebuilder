@@ -125,7 +125,8 @@ var sampleCmd = &cobra.Command{
 		appConf := config.AppConfig()
 
 		// Connect to a running client.
-		client := rpc.NewClient(appConf)
+		applicationAddress := fmt.Sprintf("%s:%s", appConf.Server.IP, appConf.Server.Port)
+		client := rpc.NewClient(applicationAddress)
 
 		// Execute the remote call.
 		res, err := client.GeneratePDF(dto)

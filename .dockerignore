@@ -11,4 +11,8 @@ private.txt
 docker-compose.yml
 
 # Project artificats we don't want includd.
-# ...
+private.md
+private.txt
+.DS_Store
+docs
+data

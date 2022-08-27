@@ -15,6 +15,6 @@ tasks:
 
   deploy:
     cmds:
-      - docker-compose -p workery-invoicebuilder build
+      - docker build -f Dockerfile -t over55/workery-invoicebuilder:latest --platform linux/amd64 .
       - docker tag over55/workery-invoicebuilder:latest over55/workery-invoicebuilder:latest
       - docker push over55/workery-invoicebuilder:latest

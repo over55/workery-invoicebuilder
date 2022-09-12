@@ -18,3 +18,17 @@ tasks:
       - docker build -f Dockerfile -t over55/workery-invoicebuilder:latest --platform linux/amd64 .
       - docker tag over55/workery-invoicebuilder:latest over55/workery-invoicebuilder:latest
       - docker push over55/workery-invoicebuilder:latest
+
+  # The following task will perform a vulnerability scan on our golang project and display any issues found.
+  scan:
+    cmds:
+      - govulncheck ./...
+      - trivy filesystem .
+      - trivy image over55/workery-invoicebuilder:latest
+      - trivy repo https://github.com/over55/workery-invoicebuilder.git
+
+  # The following command will upgade all the dependencies in this project.
+  upgrade_dep:
+    cmds:
+      - go get -u ./...
+      - go mod tidy

@@ -1,12 +1,16 @@
 package rpc
 
 import (
-	"log"
+	"os"
 	"net/rpc"
 	"time"
+
+	"github.com/rs/zerolog/log"
+	"github.com/rs/zerolog"
 )
 
 type InvoiceBuilderService struct {
+	Logger        zerolog.Logger
 	Client        *rpc.Client
 	RetryLimit    uint8
 	retryCount    uint8
@@ -15,15 +19,22 @@ type InvoiceBuilderService struct {
 }
 
 func NewClient(addr string, retryLimit uint8, delayDuration time.Duration) *InvoiceBuilderService {
+	logger := log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+
+	if addr == "" {
+		logger.Fatal().Caller().Msg("address not set for this bleve service")
+	}
+
 	client, err := rpc.DialHTTP("tcp", addr)
 	if err != nil {
-		log.Println("RPC CLIENT ERROR | InvoiceBuilderService | Dialing TCP Error:", err)
+		logger.Fatal().Err(err).Caller().Msg("dialing tcp error")
 		return nil
 	}
 
-	log.Println("RPC CLIENT | Connected to RPC server.")
+	logger.Info().Msg("connected to invoice builder rpc server")
 
 	return &InvoiceBuilderService{
+		Logger:        logger,
 		Client:        client,
 		RetryLimit:    retryLimit,
 		retryCount:    0,
@@ -41,7 +52,7 @@ func (s *InvoiceBuilderService) call(serviceMethod string, args interface{}, rep
 	if err == rpc.ErrShutdown {
 		if s.retryCount < s.RetryLimit {
 			s.retryCount += 1
-			log.Println("RPC CLIENT ERROR | InvoiceBuilderService | Detected 'connection is shut down' | Retrying #", s.retryCount)
+			s.Logger.Warn().Err(err).Caller().Msgf("detected 'connection is shut down' and retrying # %d", s.retryCount)
 
 			// We need to apply an artifical delay in case we need to give time
 			// for the server is starting up.
@@ -51,19 +62,19 @@ func (s *InvoiceBuilderService) call(serviceMethod string, args interface{}, rep
 			// RPC endpoint, else return with error.
 			client, err := rpc.DialHTTP("tcp", s.addr)
 			if err != nil {
-				log.Println("RPC CLIENT ERROR | InvoiceBuilderService | Detected 'connection is shut down' | Failed reconnecting | err:", err.Error())
+				s.Logger.Error().Err(err).Caller().Msgf("detected 'connection is shut down' and failed reconnecting")
 
 				// Note: Use recursion to retry the call.
 				return s.call(serviceMethod, args, reply)
 			}
 
-			log.Println("RPC CLIENT ERROR | InvoiceBuilderService | Detected 'connection is shut down' | Reconnected!")
+			s.Logger.Warn().Err(err).Caller().Msgf("detected 'connection is shut down' and reconnected")
 			s.Client = client
 
 			// Note: Use recursion to retry the call.
 			return s.call(serviceMethod, args, reply)
 		}
-		log.Println("RPC CLIENT ERROR | InvoiceBuilderService | Detected 'connection is shut down' | Too many retries | err:", err.Error())
+		s.Logger.Error().Err(err).Caller().Msgf("detected 'connection is shut down' and too many retries")
 		return err
 	}
 

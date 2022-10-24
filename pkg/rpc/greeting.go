@@ -1,10 +1,6 @@
 package rpc
 
 import (
-	// "errors"
-
-	"log"
-
 	"github.com/over55/workery-invoicebuilder/pkg/dtos"
 )
 
@@ -15,7 +11,7 @@ func (s *InvoiceBuilderService) Greet(name string) (string, error) {
 	var reply dtos.GreetingResponseDTO
 	err := s.call("RPC.Greet", req, &reply)
 	if err != nil {
-		log.Println("rpc_client | RPC.Greet | err", err)
+		s.Logger.Error().Err(err).Caller().Msgf("failed greeting")
 		return "", err
 	}
 	return reply.Message, nil

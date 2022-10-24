@@ -4,9 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 
+	"github.com/rs/zerolog"
 	"github.com/jung-kurt/gofpdf"
 	"github.com/jung-kurt/gofpdf/contrib/gofpdi"
 
@@ -22,11 +22,12 @@ type InvoiceBuilder interface {
 type invoiceBuilder struct {
 	AppConfig    *config.Conf
 	UUIDProvider uuid.Provider
+	Logger zerolog.Logger
 }
 
-func New(appConfig *config.Conf, uuidp uuid.Provider) (InvoiceBuilder, error) {
+func New(appConfig *config.Conf, uuidp uuid.Provider, logger zerolog.Logger) (InvoiceBuilder, error) {
 	// Defensive code: Make sure we have access to the file before proceeding any further with the code.
-	log.Println("Opening up file at path:", appConfig.Server.PDFTemplateFilePath)
+	logger.Info().Msgf("opening up file at path: %s", appConfig.Server.PDFTemplateFilePath)
 	_, err := os.Stat(appConfig.Server.PDFTemplateFilePath)
 	if os.IsNotExist(err) {
 		return nil, errors.New("file does not exist")
@@ -35,6 +36,7 @@ func New(appConfig *config.Conf, uuidp uuid.Provider) (InvoiceBuilder, error) {
 	return &invoiceBuilder{
 		AppConfig:    appConfig,
 		UUIDProvider: uuidp,
+		Logger: logger,
 	}, nil
 }
 

@@ -1,10 +1,6 @@
 package rpc
 
 import (
-	// "errors"
-
-	"log"
-
 	"github.com/over55/workery-invoicebuilder/pkg/dtos"
 )
 
@@ -12,7 +8,7 @@ func (s *InvoiceBuilderService) GeneratePDF(dto *dtos.WorkOrderInvoiceRequestDTO
 	var reply dtos.WorkOrderInvoiceResponseDTO
 	err := s.call("RPC.GeneratePDF", dto, &reply)
 	if err != nil {
-		log.Println("rpc_client | RPC.GeneratePDF | err", err)
+		s.Logger.Error().Err(err).Caller().Msgf("failed generating pdf")
 		return nil, err
 	}
 	return &reply, nil
